@@ -1,0 +1,10 @@
+<!-- search user by name -->
+<input
+  #term
+  id="search-box"
+  (input)="searchUsers(term.value)"
+  placeholder="search"
+/>
+
+<!-- dipslay users -->
+<users-list [matchedUsers]="matchedUsers"></users-list>

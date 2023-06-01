@@ -1,0 +1,93 @@
+<div class="container">
+  <!-- logo,image,mail type -->
+  <div class="form-group col-6">
+    <label for="logo">Logo: </label>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="logo"
+      [(ngModel)]="emailInfo.logo"
+      placeholder="Logo"
+      required
+    />
+
+    <label for="image">Image: </label>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="image"
+      [(ngModel)]="emailInfo.image"
+      placeholder="Image"
+      required
+    />
+
+    <label for="mail_type">Mail Type: </label>
+    <select
+      id="mail_type"
+      class="form-select"
+      [formControl]="mailType"
+      [(ngModel)]="emailInfo.mailType"
+      required
+    >
+      <option value="CONFIRM">Confirm</option>
+      <option value="CANCEL">Cancel</option>
+      <option value="REMINDER">Reminder</option>
+      <option value="DEPOSIT">Deposit</option>
+      <option value="CARD_DETAILS">Card Details</option>
+    </select>
+  </div>
+  <!-- titles -->
+  <div class="titles form-group">
+    <div class="col-6" style="margin-right: 1em">
+      <label for="title">Title: </label>
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="title"
+        [(ngModel)]="emailInfo.title"
+        placeholder="Title"
+        required
+      />
+    </div>
+
+    <div class="col-6">
+      <label for="title_greek">Title Greek: </label>
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="titleGr"
+        [(ngModel)]="emailInfo.titleGr"
+        placeholder="Title Greek"
+        required
+      />
+    </div>
+  </div>
+  <!-- texts -->
+  <div class="texts form-group">
+    <div class="col-6" style="margin-right: 1em">
+      <label for="text">Text: </label>
+      <ckeditor
+        [editor]="Editor"
+        [formControl]="text"
+        [(ngModel)]="emailInfo.text"
+        data="<p>Hello, world!</p>"
+      ></ckeditor>
+    </div>
+    <!-- submit -->
+    <div>
+      <label for="textGr">Text Greek: </label>
+      <ckeditor
+        [editor]="Editor"
+        [formControl]="textGr"
+        [(ngModel)]="emailInfo.textGr"
+        data="<p>Hello, world!</p>"
+      ></ckeditor>
+    </div>
+  </div>
+
+  <div id="submit">
+    <button type="submit" class="btn btn-primary" (click)="submit()">
+      Submit
+    </button>
+  </div>
+</div>

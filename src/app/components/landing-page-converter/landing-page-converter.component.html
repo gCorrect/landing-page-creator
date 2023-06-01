@@ -1,0 +1,626 @@
+<div class="download">
+  <span style="color: red; margin-right: 0.3em" title="Required for download"
+    >**
+  </span>
+  <input
+    type="text"
+    id="name"
+    class="form-control w-25"
+    [(ngModel)]="landingPage.name"
+    placeholder="Company Name"
+    title="Required for download"
+  />
+  <div id="exports">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="createCss(); exportCss()"
+    >
+      Export (.css)
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="createJs(); exportJs()"
+    >
+      Export (.js)
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="createHtml(); exportHtml()"
+    >
+      Export (.html)
+    </button>
+  </div>
+</div>
+
+<div class="landing-page" [ngStyle]="bgStyles()">
+  <!-- language -->
+  <div *ngIf="isOtherLanguages" class="language" [ngStyle]="languageStyles()">
+    <fa-icon
+      *ngIf="!isOtherLanguages"
+      [icon]="plusIcon"
+      class="plus-icon"
+      id="plus-icon-lang"
+      (click)="isOtherLanguages = true"
+      title="Add Language Selection "
+    >
+    </fa-icon>
+    <select
+      class="form-control"
+      title="language"
+      name="language"
+      id="lang-select"
+      (change)="selectedLang($any($event.target).value)"
+    >
+      <option
+        *ngFor="let language of landingPage.language"
+        [ngValue]="language"
+        (click)="selectedLang(language)"
+      >
+        {{ language }}
+      </option>
+      <!-- <option *ngFor="let language of landingPage.language" [ngValue]="language">{{language}}</option> -->
+    </select>
+    <!-- <fa-icon [icon]="closeIcon" class="close-icon" id="close-lang" (click)="isOtherLanguages=false" title="Remove Language Selection "> </fa-icon>       -->
+  </div>
+
+  <!-- Specs Forms -->
+  <fa-icon
+    *ngIf="!allSpecsOpen"
+    [icon]="plusIcon"
+    id="plus-sets-icon"
+    class="plus-icon"
+    (click)="allSpecsOpen = !allSpecsOpen"
+    title="Show Settings "
+  >
+  </fa-icon>
+  <fa-icon
+    *ngIf="allSpecsOpen"
+    [icon]="minusIcon"
+    id="minus-sets-icon"
+    class="minus-icon"
+    (click)="allSpecsOpen = !allSpecsOpen"
+    title="Minimize Settings "
+  >
+  </fa-icon>
+
+  <div *ngIf="allSpecsOpen" class="sets">
+    <!-- language-set -->
+    <div class="language-set form-group col-6 m">
+      <label (click)="langSpecsOpen = !langSpecsOpen" title="Language Selection"
+        >Language:
+        <fa-icon
+          [icon]="editIcon"
+          id="lang-edit-icon"
+          class="edit-icon"
+          (onClick)="langSpecsOpen = !langSpecsOpen"
+          title="Language Selection"
+        >
+        </fa-icon>
+      </label>
+
+      <div *ngIf="langSpecsOpen" class="language-specs form-details mt-0">
+        <label> Default language: </label>
+        <fa-icon
+          [icon]="closeIcon"
+          id="close-lang-specs"
+          class="close-icon"
+          (click)="langSpecsOpen = false"
+          title="Close Fonts Form "
+        >
+        </fa-icon>
+        <!-- <input type="text"
+        class="form-control"
+        [(ngModel)]="landingPage.language[0]"
+        placeholder="e.g. English"> -->
+        <select
+          class="form-select mb-1"
+          aria-label="language list"
+          [(ngModel)]="defaultLanguage"
+        >
+          <option *ngFor="let language of languages" [ngValue]="language">
+            {{ language.value }}
+          </option>
+        </select>
+        <div class="buttons">
+          <button
+            (click)="removeDefaultLanguage()"
+            class="btn btn-outline-danger w-25"
+          >
+            Remove
+          </button>
+          <button
+            (click)="setDefaultLanguage(defaultLanguage)"
+            class="btn btn-success w-25 ml-4"
+            style="margin-left: 0.25em"
+          >
+            Add
+          </button>
+        </div>
+
+        <label id="add-lang-label">
+          Add language:
+          <mat-checkbox
+            [checked]="true"
+            aria-label="language checkbox"
+            [(ngModel)]="isOtherLanguages"
+            title="Add/Remove Logo Image"
+          >
+          </mat-checkbox>
+        </label>
+        <!-- <input
+        type="text"
+        class="form-control"
+        id="language"
+        [(ngModel)]="OtherLanguageToPush.value"
+        placeholder="e.g.French"
+        /> -->
+        <select class="form-select mb-1" [(ngModel)]="OtherLanguageToPush">
+          <option *ngFor="let language of languages" [ngValue]="language">
+            {{ language.value }}
+          </option>
+        </select>
+        <div class="buttons">
+          <button
+            (click)="removeLanguage(OtherLanguageToPush.value)"
+            class="btn btn-outline-danger w-25"
+          >
+            Remove
+          </button>
+          <button
+            (click)="addLanguage(OtherLanguageToPush)"
+            class="btn btn-success w-25"
+            style="margin-left: 0.25em"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- font-set-->
+    <div class="font-face-set form-group col-6">
+      <div class="label">
+        <label
+          for="font-family"
+          (click)="fontSpecsOpen = !fontSpecsOpen"
+          title="Font Details "
+          >Font family:
+          <fa-icon [icon]="editIcon" id="font-edit-icon" class="edit-icon">
+          </fa-icon>
+        </label>
+      </div>
+
+      <div *ngIf="fontSpecsOpen" id="font-face-form" class="form-details">
+        <fa-icon
+          [icon]="closeIcon"
+          id="close-font"
+          class="close-icon"
+          (click)="fontSpecsOpen = false"
+          title="Close Fonts Form "
+        >
+        </fa-icon>
+        <!-- <input
+          type="text"
+          class="form-control"
+          id="font-family"
+          (click)="getFontFamilyNames()"
+          [(ngModel)]="landingPage.fontFace.fontFamily"
+          placeholder='font family, e.g. "Arial"'
+        /> -->
+        <select
+          class="form-select"
+          aria-label="font list"
+          [(ngModel)]="landingPage.fontFace.fontFamily"
+        >
+          <option *ngFor="let font of fonts" [ngValue]="font.value">
+            {{ font.value }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <!-- background-set -->
+    <div class="bg-img-set form-group col-6">
+      <div class="label">
+        <label
+          for="background"
+          (click)="bgSpecsOpen = !bgSpecsOpen"
+          title="Set Background Image "
+          >Background Image:
+          <fa-icon
+            [icon]="editIcon"
+            id="bg-edit-icon"
+            class="edit-icon"
+            (click)="displayBgForm()"
+          >
+          </fa-icon>
+        </label>
+      </div>
+      <div *ngIf="bgSpecsOpen" class="form-details" id="bg-form">
+        <fa-icon
+          [icon]="closeIcon"
+          id="close-bg"
+          class="close-icon"
+          (click)="bgSpecsOpen = !bgSpecsOpen"
+          title="Close Background Form"
+        >
+        </fa-icon>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="landingPage.background"
+          placeholder="background image URL"
+        />
+      </div>
+    </div>
+    <!-- logo-set -->
+    <div class="logo-set hasCheckBox">
+      <label (click)="logoSpecsOpen = !logoSpecsOpen" title="Logo image details"
+        >Logo image:
+        <fa-icon
+          [icon]="editIcon"
+          id="logo-edit-icon"
+          class="edit-icon"
+          (onClick)="logoSpecsOpen = !logoSpecsOpen"
+          title="Logo image details"
+        >
+        </fa-icon>
+      </label>
+      <mat-checkbox
+        [checked]="true"
+        aria-label="logo checkbox"
+        (change)="addRemoveLogo()"
+        [(ngModel)]="isLogo"
+        title="Add/Remove Logo Image"
+      >
+      </mat-checkbox>
+    </div>
+    <!-- text-set -->
+    <div class="text-set hasCheckBox">
+      <label
+        for="showText"
+        (click)="textSpecsOpen = !textSpecsOpen"
+        title="Description text details"
+        >Display Text :
+        <fa-icon
+          [icon]="editIcon"
+          class="edit-icon"
+          (onClick)="textSpecsOpen = !textSpecsOpen"
+          title="Description text details"
+        >
+        </fa-icon>
+      </label>
+
+      <mat-checkbox
+        [checked]="true"
+        aria-label="text checkbox"
+        [(ngModel)]="isText"
+        (change)="addRemoveText()"
+        title="Add/Remove Description Text"
+      >
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <!-- logo -->
+  <div *ngIf="isLogo" class="row">
+    <div class="logo col">
+      <div class="venue-logo" [ngStyle]="logoStyles()"></div>
+      <div *ngIf="logoSpecsOpen">
+        <div class="form-details form-group col-6" style="margin: 1em auto">
+          <fa-icon
+            [icon]="closeIcon"
+            class="close-icon"
+            style="display: block"
+            (click)="logoSpecsOpen = !logoSpecsOpen"
+            title="Close Logo Details"
+          >
+          </fa-icon>
+
+          <label for="url">Logo Image Address: </label>
+          <input
+            type="url"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.url"
+            placeholder="https://www.mylogoimage.com/logo.jpg"
+          />
+
+          <label for="width">Width: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.width"
+            placeholder="200px"
+          />
+          <input
+            type="range"
+            id="logo-width"
+            class="form-range"
+            [(ngModel)]="landingPage.logo.width"
+            min="0"
+            max="2000"
+          />
+
+          <label for="height">Heigth: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.height"
+            placeholder="200px"
+          />
+          <input
+            type="range"
+            id="logo-height"
+            class="form-range"
+            [(ngModel)]="landingPage.logo.height"
+            min="0"
+            max="500"
+          />
+        </div>
+        <!-- end of logo details -->
+      </div>
+      <!-- end of logoSpecs-->
+    </div>
+  </div>
+
+  <!-- text -->
+  <div *ngIf="isText" class="row">
+    <div class="col text-container">
+      <div class="venue-text text-center" [ngStyle]="textStyles()">
+        {{ landingPage.languages[langIndex].text }}
+      </div>
+      <!-- <div class="venue-text text-center" [ngStyle]="textStyles()">{{landingPage.text.content}}</div> -->
+      <fa-icon
+        [icon]="editIcon"
+        class="edit-icon"
+        (click)="textSpecsOpen = !textSpecsOpen"
+        title="Description text details"
+      >
+      </fa-icon>
+    </div>
+    <div *ngIf="textSpecsOpen">
+      <div class="form-details form-group col-6" style="margin: 1em auto">
+        <fa-icon
+          [icon]="closeIcon"
+          class="close-icon"
+          style="display: block"
+          (click)="textSpecsOpen = !textSpecsOpen"
+          title="Close Logo Details"
+        >
+        </fa-icon>
+
+        <label for="display">Display Text: </label>
+        <label for="text">Text Content: </label>
+        <textarea
+          type="text"
+          class="form-control"
+          [(ngModel)]="landingPage.languages[langIndex].text"
+          placeholder="Description text"
+        ></textarea>
+        <label for="color">Font Color: </label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="landingPage.text.color"
+          placeholder="e.g. black or #000000 or rgb(0,0,0) or rgba(0,0,0, .5)"
+        />
+        <input
+          type="color"
+          id="textFontColor"
+          name="head"
+          [(ngModel)]="landingPage.text.color"
+          value="#4fa0f0"
+          placeholder="background color"
+        /><br />
+
+        <label for="background_color">Background Color: </label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="landingPage.text.bgColor"
+          placeholder="e.g. black or #000000 or rgb(0,0,0) or rgba(0,0,0, .5) "
+        />
+        <input
+          type="color"
+          id="textBgColor"
+          name="head"
+          [(ngModel)]="landingPage.text.bgColor"
+          value="#4fa0f0"
+          placeholder="background color"
+        /><br />
+
+        <label for="padding">Padding: </label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="landingPage.text.padding"
+          placeholder="suggested value : 20"
+        />
+        <input
+          type="range"
+          id="text-padding"
+          class="form-range"
+          [(ngModel)]="landingPage.text.padding"
+          min="0"
+          max="200"
+        />
+      </div>
+      <!-- end of form details -->
+    </div>
+    <!-- end of Specs -->
+  </div>
+
+  <!-- links -->
+  <div
+    class="row"
+    *ngFor="
+      let link of landingPage.languages[langIndex].links;
+      let index = index
+    "
+  >
+    <div class="col" id="button-link-{{ index }}">
+      <div class="venue-buttons">
+        <div class="arrows">
+          <fa-icon
+            [icon]="arrowUp"
+            class="arrow-up"
+            (click)="moveLinkUp(index)"
+            title="Move link upwards"
+          >
+          </fa-icon>
+          <fa-icon
+            [icon]="arrowDown"
+            class="arrow-down"
+            (click)="moveLinkDown(index)"
+            title="Move link downwards"
+          >
+          </fa-icon>
+        </div>
+        <!-- <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false"> -->
+        <a href="{{ link.url }}" [ngStyle]="linkStyles(index)">
+          <button
+            class="btn-undefined"
+            [ngStyle]="linkButtonStyles(index)"
+            (mouseenter)="hover = true"
+            (mouseleave)="hover = false"
+          >
+            <!-- <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseover)="hovered=index" (mouseout)="hovered=-1"> -->
+            <i class="bi bi-undefined"></i>
+            <span>{{ link.caption }}</span>
+          </button>
+        </a>
+
+        <div class="link-set">
+          <fa-icon
+            [icon]="editIcon"
+            class="edit-icon"
+            (click)="linkSpecsOpen[index] = !linkSpecsOpen[index]"
+            title="Link Button Details "
+          >
+          </fa-icon>
+          <fa-icon
+            *ngIf="index == 0"
+            [icon]="plusIcon"
+            id="add-btn-icon"
+            (click)="addLink()"
+            title="Create new Link Button"
+          >
+          </fa-icon>
+        </div>
+      </div>
+      <!--venue-buttons -->
+      <div *ngIf="linkSpecsOpen[index]" class="link-specs">
+        <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
+        <div class="form-details form-group col-6" style="margin: 1em auto">
+          <fa-icon
+            [icon]="closeIcon"
+            class="close-icon"
+            style="display: block"
+            (click)="linkSpecsOpen[index] = false"
+            title="Close Link Details"
+          >
+          </fa-icon>
+
+          <label for="url">Link Address: </label>
+          <input
+            type="url"
+            class="form-control"
+            [(ngModel)]="link.url"
+            placeholder="https://www.myaddress.com/mylink"
+          />
+
+          <label for="caption">Caption: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.caption"
+            placeholder="My Link"
+          />
+
+          <label for="font color">Font Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.color"
+            placeholder="e.g. black or #000000 or rgb(0,0,0) or rgba(0,0,0, .5)"
+          />
+          <input
+            type="color"
+            id="font"
+            name="head"
+            [(ngModel)]="link.linkStyles.color"
+            value="#4fa0f0"
+            placeholder="background color"
+          /><br />
+
+          <label for="background_color">Background Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.bgColor"
+            placeholder="e.g. black or #000000 or rgb(0,0,0, .5) or rgba(0,0,0, .5) "
+          />
+          <input
+            type="color"
+            id="btn-bg-color"
+            name="head"
+            [(ngModel)]="link.linkStyles.bgColor"
+            value="#4fa0f0"
+            placeholder="background color"
+          /><br />
+
+          <label for="hover_background_color"
+            >Background Color on Hover:
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.hoverBgColor"
+            placeholder="e.g. black or #000000 or rgb(0,0,0, .5) or rgba(0,0,0, .5) "
+          />
+          <input
+            type="color"
+            id="hover-btn-bg-color"
+            name="head"
+            [(ngModel)]="link.linkStyles.hoverBgColor"
+            value="#4fa0f0"
+            placeholder="background color"
+          /><br />
+
+          <label for="width">Width: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.width"
+            placeholder="400"
+          />
+          <input
+            type="range"
+            id="link-width"
+            class="form-range"
+            [(ngModel)]="link.linkStyles.width"
+            min="0"
+            max="2000"
+          />
+
+          <delete-button
+            [index]="index"
+            [deleteItem]="link.caption"
+            [languages]="landingPage.languages"
+            [linkSpecsOpen]="linkSpecsOpen"
+            style="margin: 1em"
+          ></delete-button>
+        </div>
+        <!-- end of form details -->
+      </div>
+      <!-- end of Specs -->
+    </div>
+
+    <!-- <div style= "margin: 2em;" [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div> -->
+  </div>
+  <!-- end of landing-page -->
+</div>

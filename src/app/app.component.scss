@@ -1,0 +1,36 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 10%;
+    background-color: rgb(238, 242, 241);
+    margin-bottom: 1em;
+    border-radius: 0.2em;
+    border-bottom: 2px solid black;
+    a {
+      text-decoration: none;
+      color: black;
+      background-color: greenyellow;
+      margin: 1em;
+      padding: 0.5em;
+      border-radius: 0.2em;
+      transition: 0.5s;
+
+      &:hover {
+        background-color: rgb(191, 245, 110);
+      }
+    } // a
+    .active-link {
+      background-color: aquamarine;
+      &:hover {
+        background-color: aquamarine;
+      }
+    } // active link
+  } //nav
+}

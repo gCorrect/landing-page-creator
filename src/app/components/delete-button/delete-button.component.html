@@ -1,0 +1,11 @@
+ <!-- Delete button -->
+<button id="delete" type="button" (click)="delBtnPressed=true" title="Delete Link">
+    Delete
+</button>
+<div *ngIf="delBtnPressed" class="confirm-delete">
+  <div>Are you sure you want to delete button link "{{deleteItem}}"?</div>
+  <button id="no" type="button" class="bg-danger" (click)="delBtnPressed=!delBtnPressed">
+    No
+  </button>
+  <button id="yes" type="button" class="bg-success" (click)="delete(index)">Yes</button>
+</div>

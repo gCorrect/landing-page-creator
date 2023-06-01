@@ -1,0 +1,21 @@
+#delete {
+    background-color: magenta;
+    border-radius: 0.2em;
+    color: white;
+    &:hover {
+      color: rgb(222, 224, 224);
+    }
+    &:focus {
+      color: rgb(222, 224, 224);
+    }
+  }
+  .confirm-delete {
+    padding: 0.5em;
+    background-color: rgb(238, 242, 241);
+    margin-top: 0.5em;
+    border: 1px solid black;
+    border-radius: 0.2em;
+    #no {
+      margin-right: 0.5em;
+    }
+  }
