@@ -11,7 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // components
 import { AppComponent } from './app.component';
 import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
-import { LandingPageConverterComponent } from './components/landing-page-converter/landing-page-converter.component';
+import { LandingPageCreatorComponent } from './components/landing-page-converter/landing-page-creator.component';
 // Material
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -28,7 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   ],
   declarations: [
     AppComponent,
-    LandingPageConverterComponent,
+    LandingPageCreatorComponent,
     DeleteButtonComponent,
   ],
   providers: [],

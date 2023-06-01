@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // components
-import { LandingPageConverterComponent } from './components/landing-page-converter/landing-page-converter.component';
 
 const routes: Routes = [];
 

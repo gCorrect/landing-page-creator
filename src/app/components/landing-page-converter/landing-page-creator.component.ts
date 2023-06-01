@@ -18,11 +18,11 @@ import { languages, Language } from 'src/app/models/languages.model';
 declare var saveAs: any;
 
 @Component({
-  selector: 'app-landing-page-converter',
-  templateUrl: './landing-page-converter.component.html',
-  styleUrls: ['./landing-page-converter.component.scss'],
+  selector: 'app-landing-page-creator',
+  templateUrl: './landing-page-creator.component.html',
+  styleUrls: ['./landing-page-creator.component.scss'],
 })
-export class LandingPageConverterComponent implements OnInit {
+export class LandingPageCreatorComponent implements OnInit {
   // stirngs
   cssText = '';
   jsText = '';
@@ -35,7 +35,7 @@ export class LandingPageConverterComponent implements OnInit {
   arrowUp = faArrowUp;
   arrowDown = faArrowDown;
   // form display booleans
-  allSpecsOpen = true;
+  allSpecsOpen = false;
   isOtherLanguages = true;
   langSpecsOpen = false;
   fontSpecsOpen = false;
