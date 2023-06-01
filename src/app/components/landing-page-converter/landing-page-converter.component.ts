@@ -21,7 +21,6 @@ declare var saveAs: any;
   selector: 'app-landing-page-converter',
   templateUrl: './landing-page-converter.component.html',
   styleUrls: ['./landing-page-converter.component.scss'],
-  // styles: ['button {background-color: red !important; }'],
 })
 export class LandingPageConverterComponent implements OnInit {
   // stirngs
@@ -830,7 +829,7 @@ body {
     }
   }
 
-  // ==========not in use================
+  // ========== PIT ================
 
   // FONT SEARCH==========================
   ngOnInit(): void {
@@ -850,7 +849,6 @@ body {
     console.log('fontFamilies : ', fontFamilies);
     return fontFamilies;
   }
-  // FONT SEARCH==========================
 
   hideLanguage() {
     console.log('hideLanguage');
