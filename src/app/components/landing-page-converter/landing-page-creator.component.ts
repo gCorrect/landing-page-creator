@@ -734,22 +734,17 @@ body {
   linkButtonStyles(index: number) {
     let linkStyles =
       this.landingPage.languages[this.langIndex].links[index].linkStyles;
-    let styles = {};
+    let styles = {
+      'background-color': '',
+      color: `${linkStyles.color}`,
+      padding: `${linkStyles.padding}`,
+      'border-radius': `${linkStyles.borderRadius}`,
+    };
     if (this.hover)
-      styles = {
-        // `${this.hover} ? {'background-color': ${this.landingPage.links[index].button.hoverBgColor} }: {'background-color': ${this.landingPage.links[index].button.bgColor}}`
-        'background-color': `${linkStyles.hoverBgColor}`,
-        color: `${linkStyles.color}`,
-        padding: `${linkStyles.padding}`,
-        'border-radius': `${linkStyles.borderRadius}`,
-      };
+      // `${this.hover} ? {'background-color': ${this.landingPage.links[index].button.hoverBgColor} }: {'background-color': ${this.landingPage.links[index].button.bgColor}}`
+      styles['background-color'] = `${linkStyles.hoverBgColor}`;
     else {
-      styles = {
-        'background-color': `${linkStyles.bgColor}`,
-        color: `${linkStyles.color}`,
-        padding: `${linkStyles.padding}`,
-        'border-radius': `${linkStyles.borderRadius}`,
-      };
+      styles['background-color'] = `${linkStyles.bgColor}`;
     }
 
     return styles;

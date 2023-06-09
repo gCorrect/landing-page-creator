@@ -481,7 +481,8 @@
           </fa-icon>
         </div>
         <!-- <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false"> -->
-        <a href="{{ link.url }}" [ngStyle]="linkStyles(index)">
+        <a href="{{ link.url }}" [ngStyle]="linkStyles(index)"
+          >{{ index }}
           <button
             class="btn-undefined"
             [ngStyle]="linkButtonStyles(index)"
@@ -490,7 +491,7 @@
           >
             <!-- <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseover)="hovered=index" (mouseout)="hovered=-1"> -->
             <i class="bi bi-undefined"></i>
-            <span>{{ link.caption }}</span>
+            <span>{{ link.caption }} {{ index }}</span>
           </button>
         </a>
 
